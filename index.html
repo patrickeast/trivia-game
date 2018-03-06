@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Movie Trivia</title>
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.typekit.net/fgv2jhx.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <h1 class="display-3">Movie Trivia</h1>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="container gameContainer">
+        <div class="row justify-content-center">
+            <!-- Start trivia game container -->
+            <div class="col-10">
+                <h3 class="text-center headlineContainer" id="headline">
+                    <!-- Headline copy here. -->
+                </h3>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <br>
+    <!-- Question Display -->
+    <div class="row justify-content-center">
+        <div class="col-10 questionContainer">
+            <p class="text-center" id="questions">
+                Do you wanna build a snow man?
+            </p>
+        </div>
+    </div>
+
+    <br>
+    <!-- Possible answer display -->
+    <div class="row justify-content-center">
+        <div class="col-10 answersContainer">
+            <ul class="text-center" id="answers"></ul>
+            <li>A. Frozen</li>
+            <li>B. Cold as Ice</li>
+            <li>C. Winter Wonderland</li>
+            <li>D. I have no idea</li>
+        </div>
+    </div>
+
+    <br>
+    <!-- Score box -->
+    <div class="row">
+        <div class="col-10 winsContainer">
+            <div class="col-6">
+                <h3 class="text-center" id="wins"></h3>
+            </div>
+
+            <div class="col-6">
+                <h3 class="text-center" id="losses"></h3>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- Override game container with alert when an answer is selected. -->
+    <div class="container col-6 alertContainer">
+        <div class="row justify-content-center">
+            <div class="col-8">
+                <h3 id="winAlert"></h3>
+                <h3 id="lossAlert"></h3>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    <script scr="assets/javascript/game.js"></script>
+</body>
+
+</html>
