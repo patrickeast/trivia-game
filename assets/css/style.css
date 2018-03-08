@@ -1,6 +1,6 @@
 body {
     background-image: url("../images/ArtsyWall.jpeg");
-    background-size: contain;
+    background-size: cover;
     height: 100%;
     margin-bottom: 30px;
     font-family: "Press Start 2P", cursive;

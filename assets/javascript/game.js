@@ -4,160 +4,175 @@ window.onload = function () {
     $(".answersContainer").hide();
     $(".winsContainer").hide();
     $(".alertContainer").hide();
-    $("#start").on("click", function () {
-        stopwatch.start();
-        $(".timerContainer").show();
-        $(".questionContainer").show();
-        $(".answersContainer").show();
-        if (stopwatch.time <= 0) {
-            alert("Time's Up!");
-        }
-    })
-    var wins = 0;
-    var questions;
 };
 
-//Define question objects
-
-questions = [{
-    question: "There's a place off Ocean Avenue, where I used to sit and talk with you.",
-    answers: [
-        "Yellowcard",
-        "Redcard",
-        "Black Flag",
-        "Penalty Flag",
-    ],
-    correctAnswer: "Yellowcard",
-    asked: false,
-    answered: false
-}, {
-
-    question: "But if the world ends, I hope I'm in my living room with best friends...",
-    answers: [
-        "The Wonder Years",
-        "My Chemical Romance",
-        "Four Year Strong",
-        "I don't like Pop Punk",
-    ],
-    correctAnswer: "The Wonder Years",
-    negativeAnswer: "I don't like Pop Punk",
-    asked: false,
-    answered: false
-}, {
-
-    question: "You said nothing in this world could ever make you feel better than I do",
-    answers: [
-        "Zebrahead",
-        "Monkeyfoot",
-        "Dogfish",
-        "The White Stripes",
-    ],
-    correctAnswer: "Zebrahead",
-    asked: false,
-    answered: false
-}, {
-
-    question: "Same song, different chorus...",
-    answers: [
-        "Bowling for Soup",
-        "Bowling for Broccoli",
-        "Bowling for Orchids",
-        "Bowling for Something Else",
-    ],
-    correctAnswer: "Bowling for Soup",
-    asked: false,
-    answered: false
-}, {
-
-    question: "If you knew what was good for you, you'd lock me up and throw away the key.",
-    answers: [
-        "MxPx",
-        "Rancid",
-        "Rise Against",
-        "Blink-182",
-    ],
-    correctAnswer: "MxPx",
-    asked: false,
-    answered: false
-}];
-
-for (var i = 0; i < questions.length; i++) {
-    var answerButton = $("<button>");
-    answerButton.text(questions[i].answers);
-    answerButton.attr("data-id", i);
-    $(".answersContainer").append(answerButton);
-    $(".questionContainer").html(questions[i].question);
-}
-
-answerButton.on("click", function(e) {
-    if (this.attr == questions[i]) {
-        setInterval($("#winsAlert").show(), 1000);
-        wins++;
-        $(".winsContainer").html("Wins: " + wins);
+$.fn.triviaGame = function () {
+    //make trivia into a variable
+    var trivia = this;
+    //define answers correct and incorrect
+    trivia.answers = {
+        correct: 0,
+        incorrect: 0
     }
+    //set userAnswer and image to null, in order to not render any result on function start
+    trivia.userAnswer = null;
+    trivia.image = null;
 
-})
+    //Set the current question to the data-id of the trivia.questions array.
+    trivia.currentQuestion = 0;
 
+    //Define question objects
 
-//Define reset scenario
+    trivia.questions = [{
+        question: "There's a place off Ocean Avenue, where I used to sit and talk with you.",
+        choices: [
+            "Yellowcard",
+            "Redcard",
+            "Black Flag",
+            "Penalty Flag",
+        ],
+        image: ["../images/Yellowcard.gif"],
+        correct: 0
+    }, {
 
-function resetGame() {
-    $(".questionContainer").empty();
-    $(".answersContainer").empty();
-    stopwatch.reset();
+        question: "But if the world ends, I hope I'm in my living room with best friends...",
+        choices: [
+            "My Chemical Romance",
+            "The Wonder Years",
+            "Four Year Strong",
+            "I don't like Pop Punk",
+        ],
+        negativeAnswer: "I don't like Pop Punk",
+        image: ["../images/wonderyears.gif"],
+        correct: 1
+    }, {
+
+        question: "You said nothing in this world could ever make you feel better than I do",
+        choices: [
+            "Monkeyfoot",
+            "Dogfish",
+            "Zebrahead",
+            "The White Stripes",
+        ],
+        image: ["../images/zebrahead.gif"],
+        correct: 2
+    }, {
+
+        question: "Same song, different chorus...",
+        choices: [
+            "Bowling for Soup",
+            "Bowling for Broccoli",
+            "Bowling for Orchids",
+            "Bowling for Something Else",
+        ],
+        image: ["../images/bowlingforsoup.gif"],
+        correct: 0
+    }, {
+
+        question: "If you knew what was good for you, you'd lock me up and throw away the key.",
+        choices: [
+            "Blink-182",
+            "Rancid",
+            "Rise Against",
+            "MxPx",
+        ],
+        correctAnswer: "MxPx",
+        image: ["../images/mxpx.gif"],
+        correct: 3
+    }];
+
+    trivia.questionAsked = function () {
+        if (trivia.questions[trivia.currentQuestion]) {
+            $("#timer").html("Time left: " + "00:" + trivia.count + " secs");
+            $("#questionContainer").html(trivia.questions[trivia.currentQuestion].question);
+            var choicesArr = trivia.questions[trivia.currentQuestion].choices;
+            var answerButtonArr = [];
+
+            for (var i = 0; i < choicesArr.length; i++) {
+                var answerButton = $("<button>");
+                answerButton.text(choicesArr[i]);
+                answerButton.attr("data-id", i);
+                $(".answersContainer").append(answerButton);
+            }
+
+            window.timerContainer = setInterval(trivia.stopwatch, 1000);
+        } else {
+            $("body").append($("<div />", {
+                text: "Unanswered: " + (
+                    trivia.questions.length - (trivia.answers.correct + trivia.answers.incorrect)),
+                class: "result"
+            }));
+            $("#start").text("Play Again?").appendTo("body").show();
+
+        }
+    };
+
+    trivia.stopwatch = function () {
+        trivia.count--;
+        if (trivia.count <= 0) {
+            setTimeout(function () {
+                trivia.nextQuestion();
+            });
+
+        } else {
+            $("#timer").html("Time left: " + "00:" + trivia.count + " secs");
+        }
+    };
+
+    trivia.nextQuestion = function () {
+        trivia.currentQuestion++;
+        clearInterval(window.triviaCounter);
+        trivia.count = 30;
+        $("#timer").html("");
+        setTimeout(function () {
+            trivia.reset();
+            trivia.questionAsked();
+        }, 1000)
+    };
+
+    trivia.reset = function () {
+        $("div[id]").each(function (item) {
+            $(this).html("");
+        });
+        $("#wins").html("Correct Answers: " + trivia.answers.correct);
+        $("#wins").html("Incorrect Answers: " + trivia.answers.incorrect);
+    };
+
+    trivia.answer = function (correct) {
+        var string = correct ? "correct" : "incorrect";
+        trivia.answers[string]++;
+        $("." + string).html(string + " answers: " + trivia.answers[string]);
+    };
+
+    return trivia;
+
 };
 
 
+var game;
 
+$("#start").on("click", function () {
+    $(this).hide();
+    $(".timerContainer").show();
+    $(".questionContainer").show();
+    $(".answersContainer").show();
+    game = new $(window).triviaGame();
+    game.questionAsked();
+});
 
-//CLOCK AREA
+$(".answersContainer").on("click", "button", function (e) {
+    var userChoice = $(this).data("id"),
+        trivia = game || $(window).triviaGame(),
+        index = trivia.questions[trivia.currentQuestion].correct,
+        correct = trivia.questions[trivia.currentQuestion].choices[index];
 
-//prevents the clock from being sped up unnecessarily
-var clockRunning = false;
-
-var stopwatch = {
-
-    time: 30,
-
-    reset: function () {
-        stopwatch.time = 0;
-    },
-
-    start: function () {
-        if (!clockRunning) {
-            intervalId = setInterval(stopwatch.count, 1000);
-            clockRunning = true;
-        }
-    },
-
-    stop: function () {
-        clearInterval(intervalId);
-        clockRunning = false;
-    },
-
-    count: function () {
-        stopwatch.time = stopwatch.time - 1;
-        var converted = stopwatch.timeConverter(stopwatch.time);
-        $("#timer").text(converted);
-    },
-
-    timeConverter: function (t) {
-
-        var minutes = Math.floor(t / 60);
-        var seconds = t - (minutes * 60);
-
-        if (seconds < 10) {
-            seconds = "0" + seconds;
-        }
-
-        if (minutes === 0) {
-            minutes = "00";
-        }
-
-        else if (minutes < 10) {
-            minutes = "0" + minutes;
-        }
-
-        return minutes + ":" + seconds;
+    if (userChoice !== index) {
+        $("#answersContainer").text("Nope. The right answer is " + correctAnswer);
+        trivia.answer(false);
+    } else {
+        $("answersContainer").text("Rock on! You got it!");
+        trivia.answer(true);
     }
-};
+    trivia.nextQuestion();
+});
+
