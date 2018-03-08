@@ -1,80 +1,102 @@
 window.onload = function () {
-    $("#start").on("click", stopwatch.start);
+    $(".timerContainer").hide();
+    $(".questionContainer").hide();
+    $(".answersContainer").hide();
+    $(".winsContainer").hide();
+    $(".alertContainer").hide();
+    $("#start").on("click", function () {
+        stopwatch.start();
+        $(".timerContainer").show();
+        $(".questionContainer").show();
+        $(".answersContainer").show();
+        if (stopwatch.time <= 0) {
+            alert("Time's Up!");
+        }
+    })
+    var wins = 0;
+    var questions;
 };
-
 
 //Define question objects
 
-var question1 = {
-    question: "He touched the butt.",
+questions = [{
+    question: "There's a place off Ocean Avenue, where I used to sit and talk with you.",
     answers: [
-        "Finding Nemo",
-        "Finding Darla",
-        "Finding Dory",
-        "Finding Gill",
+        "Yellowcard",
+        "Redcard",
+        "Black Flag",
+        "Penalty Flag",
     ],
-    correctAnswer: "Finding Nemo",
+    correctAnswer: "Yellowcard",
     asked: false,
     answered: false
-};
+}, {
 
-var question2 = {
-    question: "I am your wife! I’m the greatest good you’re ever gonna get.",
+    question: "But if the world ends, I hope I'm in my living room with best friends...",
     answers: [
-        "Up",
-        "The Incredibles",
-        "Coco",
-        "Toy Story 3",
+        "The Wonder Years",
+        "My Chemical Romance",
+        "Four Year Strong",
+        "I don't like Pop Punk",
     ],
-    correctAnswer: "The Incredibles",
+    correctAnswer: "The Wonder Years",
+    negativeAnswer: "I don't like Pop Punk",
     asked: false,
     answered: false
-};
+}, {
 
-var question3 = {
-    question: "Adventure is out there!",
+    question: "You said nothing in this world could ever make you feel better than I do",
     answers: [
-        "Finding Nemo",
-        "Toy Story",
-        "The Good Dinosaur",
-        "Up",
+        "Zebrahead",
+        "Monkeyfoot",
+        "Dogfish",
+        "The White Stripes",
     ],
-    correctAnswer: "Up",
+    correctAnswer: "Zebrahead",
     asked: false,
     answered: false
-};
+}, {
 
-var question4 = {
-    question: "Put that thing back where it came from, or so help me--!",
+    question: "Same song, different chorus...",
     answers: [
-        "Ratatouille",
-        "Cars",
-        "Monsters, Inc.",
-        "Inside Out",
+        "Bowling for Soup",
+        "Bowling for Broccoli",
+        "Bowling for Orchids",
+        "Bowling for Something Else",
     ],
-    correctAnswer: "Monters, Inc.",
+    correctAnswer: "Bowling for Soup",
     asked: false,
     answered: false
-};
+}, {
 
-var question5 = {
-    question: "This isn’t flying. This is falling with style.",
+    question: "If you knew what was good for you, you'd lock me up and throw away the key.",
     answers: [
-        "Toy Story",
-        "Toy Story 2",
-        "Toy Story 3",
-        "Toy Story 4?",
+        "MxPx",
+        "Rancid",
+        "Rise Against",
+        "Blink-182",
     ],
-    correctAnswer: "Toy Story",
+    correctAnswer: "MxPx",
     asked: false,
     answered: false
-};
+}];
 
-console.log(question1.question);
-console.log(question2.question);
-console.log(question3.question);
-console.log(question4.question);
-console.log(question5.question);
+for (var i = 0; i < questions.length; i++) {
+    var answerButton = $("<button>");
+    answerButton.text(questions[i].answers);
+    answerButton.attr("data-id", i);
+    $(".answersContainer").append(answerButton);
+    $(".questionContainer").html(questions[i].question);
+}
+
+answerButton.on("click", function(e) {
+    if (this.attr == questions[i]) {
+        setInterval($("#winsAlert").show(), 1000);
+        wins++;
+        $(".winsContainer").html("Wins: " + wins);
+    }
+
+})
 
 
 //Define reset scenario
@@ -87,74 +109,38 @@ function resetGame() {
 
 
 
-//Define win scenario
 
-
-
-//Define lose scenario
-
-
-
-//Define end game scenario
-
-
-
-
-
-
-// STOPWATCH ACTIVITY (SOLUTION)
-// =============================
-
-// This code will run as soon as the page loads
-
-//  Variable that will hold our setInterval that runs the stopwatch
-var intervalId;
+//CLOCK AREA
 
 //prevents the clock from being sped up unnecessarily
 var clockRunning = false;
 
-// Our stopwatch object
 var stopwatch = {
 
-    time: 0,
-
+    time: 30,
 
     reset: function () {
-
         stopwatch.time = 0;
-
-        // DONE: Change the "display" div to "00:00."
-        $("#timer").text("00:00");
-
     },
-    start: function () {
 
-        // DONE: Use setInterval to start the count here and set the clock to running.
+    start: function () {
         if (!clockRunning) {
             intervalId = setInterval(stopwatch.count, 1000);
             clockRunning = true;
         }
     },
-    stop: function () {
 
-        // DONE: Use clearInterval to stop the count here and set the clock to not be running.
+    stop: function () {
         clearInterval(intervalId);
         clockRunning = false;
     },
 
     count: function () {
-
-        // DONE: increment time by 1, remember we cant use "this" here.
-        stopwatch.time ++;
-
-        // DONE: Get the current time, pass that into the stopwatch.timeConverter function,
-        //       and save the result in a variable.
+        stopwatch.time = stopwatch.time - 1;
         var converted = stopwatch.timeConverter(stopwatch.time);
-        console.log(converted);
-
-        // DONE: Use the variable we just created to show the converted time in the "display" div.
         $("#timer").text(converted);
     },
+
     timeConverter: function (t) {
 
         var minutes = Math.floor(t / 60);
@@ -167,6 +153,7 @@ var stopwatch = {
         if (minutes === 0) {
             minutes = "00";
         }
+
         else if (minutes < 10) {
             minutes = "0" + minutes;
         }
