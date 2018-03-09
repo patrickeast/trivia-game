@@ -83,7 +83,7 @@ $.fn.triviaGame = function () {
 
     trivia.questionAsked = function () {
         if (trivia.questions[trivia.currentQuestion]) {
-            $("#timer").html("Time left: " + "00:" + trivia.count + " secs");
+            $("#timer").html("Time left: " + "00:" + trivia.count);
             $("#questionContainer").html(trivia.questions[trivia.currentQuestion].question);
             var choicesArr = trivia.questions[trivia.currentQuestion].choices;
             var answerButtonArr = [];
@@ -115,7 +115,7 @@ $.fn.triviaGame = function () {
             });
 
         } else {
-            $("#timer").html("Time left: " + "00:" + trivia.count + " secs");
+            $("#timer").html("Time left: " + "00:" + trivia.count);
         }
     };
 

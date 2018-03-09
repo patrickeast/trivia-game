@@ -1,36 +1,38 @@
 body {
     background-image: url("../images/ArtsyWall.jpeg");
     background-size: cover;
-    height: 100%;
-    margin-bottom: 30px;
     font-family: "Press Start 2P", cursive;
-    
 }
 
 h1 {
-    font-size: 24px;
+    position: relative;
+    top: 30px;
+    font-size: 18px;
     text-shadow: 1px 1px rgba(255, 255, 255, 0.7);
 }
 
 .answersContainer, h5, p {
-    font-size: 12px;
+    position: absolute;
+    font-size: 10px;
 }
 
 h2, h4, h6, h5, p, blockquote {
     color: #333
 }
 
-blockquote {
-    font-size: 24px;
-    line-height: 1.5rem;
+.gameboy {
+    background-image: url("../images/image.svg");
+    height: 600px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+
 }
 
 .gameContainer {
+    position: relative;
+    top: 0;
     margin-top: 40px;
-    background-color: rgba(255, 255, 255, 0.7);
-    box-shadow: 2px 2px 2px 2px rgba(1, 1, 1, .6);
-    padding: 20px;
-    border-radius: 10px;
 }
 
 .headlineContainer {
@@ -40,17 +42,29 @@ blockquote {
     border-radius: 5px;
 }
 
-.timerContainer {
-    text-shadow: 1px 1px rgba(255, 255, 255, 0.7);
-}
-
 .questionContainer {
+    color: white;
+    margin: 0 auto;
+    position: relative;
     padding: 10px;
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgb(224, 63, 63);
+    width: 206px;
+    left: 2px;
+    height: 179px;
+    top: -11px;
+}
+.answersContainer {
+    position: relative;
+    top: -105px;
 }
 
-.answersContainer {
-    color: #333
+.answersContainer, button{
+    display: block;
+    color: #333;
+    width: 200px;
+    left: 2px;
+    margin: 0 auto;
+    padding: 0;
 }
 
 #wins {
@@ -75,4 +89,24 @@ blockquote {
 
 #lossAlert {
     color: red;
+}
+
+#start {
+    position: relative;
+    top: -65px;
+    left: 1px;
+    height: 179px;
+    width: 207px;
+}
+
+#start:hover {
+    text-shadow: 3px 3px black;
+}
+
+.timerContainer {
+    position: relative;
+    top: 220px;
+    font-size: 10px;
+    color: white;
+    text-shadow: 1px 1px black;
 }
