@@ -1,12 +1,12 @@
 window.onload = function () {
+    $(".alertContainer").show();
     $(".timerContainer").hide();
     $(".questionContainer").hide();
     $(".answersContainer").hide();
     $(".winsContainer").hide();
-    $(".alertContainer").hide();
 };
 
-$.fn.triviaGame = function () {
+function triviaGame() {
     //make trivia into a variable
     var trivia = this;
     //define answers correct and incorrect
@@ -32,7 +32,8 @@ $.fn.triviaGame = function () {
             "Penalty Flag",
         ],
         image: ["../images/Yellowcard.gif"],
-        correct: 0
+        correct: 0,
+        correctAnswer: "Yellowcard"
     }, {
 
         question: "But if the world ends, I hope I'm in my living room with best friends...",
@@ -40,11 +41,11 @@ $.fn.triviaGame = function () {
             "My Chemical Romance",
             "The Wonder Years",
             "Four Year Strong",
-            "I don't like Pop Punk",
+            "Blink-182",
         ],
-        negativeAnswer: "I don't like Pop Punk",
         image: ["../images/wonderyears.gif"],
-        correct: 1
+        correct: 1,
+        correctAnswer: "The Wonder Years"
     }, {
 
         question: "You said nothing in this world could ever make you feel better than I do",
@@ -52,21 +53,23 @@ $.fn.triviaGame = function () {
             "Monkeyfoot",
             "Dogfish",
             "Zebrahead",
-            "The White Stripes",
+            "CatDog",
         ],
         image: ["../images/zebrahead.gif"],
-        correct: 2
+        correct: 2,
+        correctAnswer: "Zebrahead"
     }, {
 
         question: "Same song, different chorus...",
         choices: [
             "Bowling for Soup",
-            "Bowling for Broccoli",
-            "Bowling for Orchids",
-            "Bowling for Something Else",
+            "Bowling for Broth",
+            "Bowling for liquid",
+            "Bowling for chili",
         ],
         image: ["../images/bowlingforsoup.gif"],
-        correct: 0
+        correct: 0,
+        correctAnswer: "Bowling for Soup"
     }, {
 
         question: "If you knew what was good for you, you'd lock me up and throw away the key.",
@@ -76,15 +79,17 @@ $.fn.triviaGame = function () {
             "Rise Against",
             "MxPx",
         ],
-        correctAnswer: "MxPx",
         image: ["../images/mxpx.gif"],
-        correct: 3
+        correct: 3,
+        correctAnswer: "MxPx"
     }];
 
     trivia.questionAsked = function () {
         if (trivia.questions[trivia.currentQuestion]) {
+            trivia.count = 30;
             $("#timer").html("Time left: " + "00:" + trivia.count);
-            $("#questionContainer").html(trivia.questions[trivia.currentQuestion].question);
+            $(".questionContainer").html(trivia.questions[trivia.currentQuestion].question);
+            console.log(trivia.questions[trivia.currentQuestion].question);
             var choicesArr = trivia.questions[trivia.currentQuestion].choices;
             var answerButtonArr = [];
 
@@ -96,19 +101,23 @@ $.fn.triviaGame = function () {
             }
 
             window.timerContainer = setInterval(trivia.stopwatch, 1000);
+
         } else {
             $("body").append($("<div />", {
                 text: "Unanswered: " + (
                     trivia.questions.length - (trivia.answers.correct + trivia.answers.incorrect)),
                 class: "result"
             }));
-            $("#start").text("Play Again?").appendTo("body").show();
+            $("#start").text("Play Again?").appendTo(".questionContainer").show();
 
         }
     };
 
     trivia.stopwatch = function () {
         trivia.count--;
+        if (trivia.count <= 9) {
+            $("#timer").html("Time left: " + "00:0" + trivia.count);
+        }
         if (trivia.count <= 0) {
             setTimeout(function () {
                 trivia.nextQuestion();
@@ -121,7 +130,7 @@ $.fn.triviaGame = function () {
 
     trivia.nextQuestion = function () {
         trivia.currentQuestion++;
-        clearInterval(window.triviaCounter);
+        clearInterval(window.timerContainer);
         trivia.count = 30;
         $("#timer").html("");
         setTimeout(function () {
@@ -131,11 +140,14 @@ $.fn.triviaGame = function () {
     };
 
     trivia.reset = function () {
-        $("div[id]").each(function (item) {
-            $(this).html("");
-        });
+        $(".answersContainer").html("");
+        // $("div[id]").each(function (item) {
+        //     $(this).html("");
+        // });
         $("#wins").html("Correct Answers: " + trivia.answers.correct);
-        $("#wins").html("Incorrect Answers: " + trivia.answers.incorrect);
+        console.log(trivia.answers.correct);
+        $("#losses").html("Incorrect Answers: " + trivia.answers.incorrect);
+        console.log("Answers Incorrect: " + trivia.answers.incorrect);
     };
 
     trivia.answer = function (correct) {
@@ -156,21 +168,30 @@ $("#start").on("click", function () {
     $(".timerContainer").show();
     $(".questionContainer").show();
     $(".answersContainer").show();
-    game = new $(window).triviaGame();
+    $(".winsContainer").show();
+    setInterval(function () {
+        $(".winsContainer").hide();
+    }, 3000)
+    game = triviaGame();
     game.questionAsked();
+    console.log(game.questionAsked);
 });
 
-$(".answersContainer").on("click", "button", function (e) {
+$(".answersContainer").on("click", "button", function () {
+    console.log("answers container clicked");
     var userChoice = $(this).data("id"),
-        trivia = game || $(window).triviaGame(),
+        trivia = game,
         index = trivia.questions[trivia.currentQuestion].correct,
         correct = trivia.questions[trivia.currentQuestion].choices[index];
 
     if (userChoice !== index) {
-        $("#answersContainer").text("Nope. The right answer is " + correctAnswer);
+        console.log("Wrong answer");
+        $(".alertContainer").text("Umm, try " + trivia.questions[currentQuestion].correctAnswer);
+        console.log(trivia.questions[currentQuestion].correctAnswer);
         trivia.answer(false);
     } else {
-        $("answersContainer").text("Rock on! You got it!");
+        console.log("Right Answer");
+        $(".alertContainer").text("Rock on! You got it!");
         trivia.answer(true);
     }
     trivia.nextQuestion();

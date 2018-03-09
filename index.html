@@ -25,7 +25,6 @@
             <br>
             <div class="row justify-content-center">
                 <!-- Start trivia game container -->
-                <div class="col-8">
                     <h4 class="text-center timerContainer" id="timer">
                     </h4>
                 </div>
@@ -34,57 +33,37 @@
             <br>
             <!-- Question Display -->
             <div class="row justify-content-center">
-                <div class="questionContainer">
-                </div>
+                <div class="questionContainer"></div>
             </div>
 
             <br>
             <!-- Possible answer display -->
             <div class="row justify-content-center">
-                <div class="answersContainer">
-                    <!-- <button type="button" class="list-group-item list-group-item-action">
-                    <span class="badge badge-pill" id="answer1">A </span>
-                    <span> Yellowcard</span>
-                </button>
-                <button type="button" class="list-group-item list-group-item-action">
-                    <span class="badge badge-pill" id="answer2">B </span>
-                    <span>Red Card</span>
-                </button>
-                <button type="button" class="list-group-item list-group-item-action">
-                    <span class="badge badge-pill" id="answer3">C </span>
-                    <span> Black Flag</span>
-                </button>
-                <button type="button" class="list-group-item list-group-item-action">
-                    <span class="badge badge-pill" id="answer4">D </span>
-                    <span>Penalty Flag</span> -->
-                    <!-- </button> -->
-                </div>
+                <div class="answersContainer"></div>
             </div>
 
             <br>
             <!-- Score box -->
-            <div class="row">
+            <div class="row justify-content-center">
                 <div class="winsContainer">
-                        <h3 class="text-center" id="wins"></h3>
-                        <h3 class="text-center" id="losses"></h3>
+                    <p class="text-center" id="wins"></p>
+                    <p class="text-center" id="losses"></p>
                 </div>
             </div>
 
             <br>
 
-            <div class="row justify-content-center">
+            <div class="row justify-content-center startContainer">
                 <button type="button" class="btn btn-danger" id="start">Start!</button>
             </div>
         </div>
 
         <!-- Override game container with alert when an answer is selected. -->
-        <div class="container col-6 alertContainer">
-                <div class="col-8">
-                    <h3 id="winAlert"></h3>
-                    <h3 id="lossAlert"></h3>
-                </div>
-            </div>
+        <div class="alertContainer">
+                <p class="text-center" id="winAlert"></p>
+                <p class="text-center" id="lossAlert"></p>
         </div>
+    </div>
     </div>
 
     <script src="assets/javascript/game.js"></script>
