@@ -82,6 +82,7 @@ function triviaGame() {
         correct: 3,
         correctAnswer: "MxPx"
     }, {
+
         question: "Don't forget to think about me and I won't forget to write you once a week, she said.",
         choices: [
             "Blink-182",
@@ -91,8 +92,8 @@ function triviaGame() {
         ],
         correct: 0,
         correctAnswer: "Blink-182"
-
     }, {
+
         question: "Way away away from here I'll be. Way away away so you can see how it feels to be alone and not believe.",
         choices: [
             "Relient K",
@@ -102,6 +103,40 @@ function triviaGame() {
         ],
         correct: 3,
         correctAnswer: "Yellowcard"
+    }, {
+
+        question: "Hate is a strong word, but I really, really, really don't like you.",
+        choices: [
+            "Relient K",
+            "All American Rejects",
+            "Bayside",
+            "New Found Glory"
+        ],
+        correct: 1,
+        correctAnswer: "All American Rejecs"
+    }, {
+
+        question: "...and my favorite band will always be Tears for Fears, and I'm gonna wear a pink tux to the prom.",
+        choices: [
+            "Relient K",
+            "Blink-182",
+            "Silversun Pickups",
+            "Fountains of Wayne",
+        ],
+        correct: 0,
+        correctAnswer: "Relient K"
+    }, {
+
+        question: "Do you remember when I mowed your lawn? Your mom came out, with just a towel o-o-o-o-on.",
+        choices: [
+            "Yewllowcard",
+            "Simple Plan",
+            "Fountains of Wayne",
+            "Blondie"
+        ],
+        correct: 2,
+        correctAnswer: "Fountains of Wayne"
+        
     }];
 
     trivia.questionAsked = function () {
