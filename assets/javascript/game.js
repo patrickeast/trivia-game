@@ -1,9 +1,8 @@
 window.onload = function () {
-    $(".alertContainer").show();
     $(".timerContainer").hide();
     $(".questionContainer").hide();
     $(".answersContainer").hide();
-    $(".winsContainer").hide();
+    $(".alertContainer").hide();
 };
 
 function triviaGame() {
@@ -31,7 +30,7 @@ function triviaGame() {
             "Black Flag",
             "Penalty Flag",
         ],
-        image: ["../images/Yellowcard.gif"],
+        image: "../images/Yellowcard.gif",
         correct: 0,
         correctAnswer: "Yellowcard"
     }, {
@@ -43,19 +42,19 @@ function triviaGame() {
             "Four Year Strong",
             "Blink-182",
         ],
-        image: ["../images/wonderyears.gif"],
+        image: "../images/wonderyears.gif",
         correct: 1,
         correctAnswer: "The Wonder Years"
     }, {
 
-        question: "You said nothing in this world could ever make you feel better than I do",
+        question: "You said nothing in this world could ever make you feel better than I do.",
         choices: [
             "Monkeyfoot",
             "Dogfish",
             "Zebrahead",
             "CatDog",
         ],
-        image: ["../images/zebrahead.gif"],
+        image: "../images/zebrahead.gif",
         correct: 2,
         correctAnswer: "Zebrahead"
     }, {
@@ -67,7 +66,7 @@ function triviaGame() {
             "Bowling for liquid",
             "Bowling for chili",
         ],
-        image: ["../images/bowlingforsoup.gif"],
+        image: "../images/bowlingforsoup.gif",
         correct: 0,
         correctAnswer: "Bowling for Soup"
     }, {
@@ -79,9 +78,30 @@ function triviaGame() {
             "Rise Against",
             "MxPx",
         ],
-        image: ["../images/mxpx.gif"],
+        image: "../images/mxpx.gif",
         correct: 3,
         correctAnswer: "MxPx"
+    }, {
+        question: "Don't forget to think about me and I won't forget to write you once a week, she said.",
+        choices: [
+            "Blink-182",
+            "Austin City Limits",
+            "^^That's not a band",
+            "Hoobastank"
+        ],
+        correct: 0,
+        correctAnswer: "Blink-182"
+
+    }, {
+        question: "Way away away from here I'll be. Way away away so you can see how it feels to be alone and not believe.",
+        choices: [
+            "Relient K",
+            "Garth Brooks",
+            "Snoop Dogg",
+            "Yellowcard"
+        ],
+        correct: 3,
+        correctAnswer: "Yellowcard"
     }];
 
     trivia.questionAsked = function () {
@@ -103,22 +123,34 @@ function triviaGame() {
             window.timerContainer = setInterval(trivia.stopwatch, 1000);
 
         } else {
-            $("body").append($("<div />", {
-                text: "Unanswered: " + (
-                    trivia.questions.length - (trivia.answers.correct + trivia.answers.incorrect)),
-                class: "result"
-            }));
-            $("#start").text("Play Again?").appendTo(".questionContainer").show();
-
+            $("#start")
+                .html(
+                    "<p>" +"Play Again?" +
+                    "<br>" + 
+                    "Correct Answers: " +
+                    trivia.answers.correct +
+                    "<br>" + 
+                    " Incorrect Answers: " +
+                    trivia.answers.incorrect +
+                    "</p>")
+                .appendTo(".questionContainer")
+                .show();
         }
     };
 
     trivia.stopwatch = function () {
         trivia.count--;
-        if (trivia.count <= 9) {
+        if (trivia.count < 10) {
             $("#timer").html("Time left: " + "00:0" + trivia.count);
         }
         if (trivia.count <= 0) {
+            $(".alertContainer").show();
+            $("#timeUpAlert").text("Time's Up! Next Question...");
+            $("#wins").html("Correct Answers: " + trivia.answers.correct);
+            $("#losses").html("Incorrect Answers: " + (trivia.answers.incorrect + 1));
+            setInterval(function () {
+                $(".alertContainer").hide();
+            }, 3000)
             setTimeout(function () {
                 trivia.nextQuestion();
             });
@@ -131,8 +163,10 @@ function triviaGame() {
     trivia.nextQuestion = function () {
         trivia.currentQuestion++;
         clearInterval(window.timerContainer);
+        clearInterval(window.alertContainer);
+        // $("#timer").empty();
+        $("#timer").val("");
         trivia.count = 30;
-        $("#timer").html("");
         setTimeout(function () {
             trivia.reset();
             trivia.questionAsked();
@@ -141,9 +175,6 @@ function triviaGame() {
 
     trivia.reset = function () {
         $(".answersContainer").html("");
-        // $("div[id]").each(function (item) {
-        //     $(this).html("");
-        // });
         $("#wins").html("Correct Answers: " + trivia.answers.correct);
         console.log(trivia.answers.correct);
         $("#losses").html("Incorrect Answers: " + trivia.answers.incorrect);
@@ -153,7 +184,6 @@ function triviaGame() {
     trivia.answer = function (correct) {
         var string = correct ? "correct" : "incorrect";
         trivia.answers[string]++;
-        $("." + string).html(string + " answers: " + trivia.answers[string]);
     };
 
     return trivia;
@@ -168,32 +198,43 @@ $("#start").on("click", function () {
     $(".timerContainer").show();
     $(".questionContainer").show();
     $(".answersContainer").show();
-    $(".winsContainer").show();
-    setInterval(function () {
-        $(".winsContainer").hide();
-    }, 3000)
+
     game = triviaGame();
     game.questionAsked();
     console.log(game.questionAsked);
 });
 
 $(".answersContainer").on("click", "button", function () {
-    console.log("answers container clicked");
     var userChoice = $(this).data("id"),
         trivia = game,
         index = trivia.questions[trivia.currentQuestion].correct,
         correct = trivia.questions[trivia.currentQuestion].choices[index];
 
+
     if (userChoice !== index) {
+        $(".alertContainer").show();
         console.log("Wrong answer");
-        $(".alertContainer").text("Umm, try " + trivia.questions[currentQuestion].correctAnswer);
-        console.log(trivia.questions[currentQuestion].correctAnswer);
+        $("#lossAlert").text("Umm, no. Try " + trivia.questions[currentQuestion].correctAnswer);
+        $("#wins").html("Correct Answers: " + trivia.answers.correct);
+        $("#losses").text("Incorrect Answers: " + trivia.answers.incorrect);
         trivia.answer(false);
+        setTimeout(function () {
+            $(".alertContainer").hide();
+        }, 3000)
+
     } else {
+        $(".alertContainer").show();
         console.log("Right Answer");
-        $(".alertContainer").text("Rock on! You got it!");
+        $("#winAlert").text("Rock on! You got it!");
+        $("#wins").html("Correct Answers: " + trivia.answers.correct);
+        $("#losses").text("Incorrect Answers: " + trivia.answers.incorrect);
         trivia.answer(true);
+        setTimeout(function () {
+            $(".alertContainer").hide();
+        }, 3000)
     }
+
+
     trivia.nextQuestion();
 });
 

@@ -11,7 +11,7 @@ h1 {
     text-shadow: 1px 1px rgba(255, 255, 255, 0.7);
 }
 
-.answersContainer, h5, p {
+.answersContainer, h5, p, span {
     font-size: 10px;
 }
 
@@ -25,7 +25,6 @@ h2, h4, h6, h5, p, blockquote {
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
-
 }
 
 .gameContainer {
@@ -44,11 +43,11 @@ h2, h4, h6, h5, p, blockquote {
 .questionContainer {
     font-size: 10px;
     color: white;
-    text-shadow: .5px .5px black;
+    text-shadow: 1px 1px black;
     margin: 0 auto;
     position: relative;
     padding: 10px;
-    background-color: rgb(224, 63, 63);
+    background-color: rgb(190, 59, 59);
     width: 207px;
     left: 2px;
     height: 179px;
@@ -60,47 +59,35 @@ h2, h4, h6, h5, p, blockquote {
     top: -105px;
 }
 
-.answersContainer, button{
+.answersContainer button{
+    text-align: center;
+    background-color: #333;
     display: block;
-    color: #333;
+    color: rgb(239, 250, 229);
     width: 200px;
     left: 2px;
     margin: 0 auto;
     padding: 0;
+    border-radius: 5px;
 }
 
 .answersContainer button:hover {
-    background-color: lightgray;
+    background-color: rgb(239, 250, 229);
     border-radius: 5px;
-    color: black;
+    color: #333;
 }
 
-
-
 .alertContainer {
-    font-size: 12px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background-color: rgba(255, 255, 255, 0.7);
+    position: relative;
+    top: -330px;
+    left: 2px;
+    background-color: rgb(255, 255, 255);
+    width: 207px;
+    height: 179px;
     padding: 5px;
     color: #444;
     text-align: center;
-    text-shadow: 1px 1px white;
     margin: 0 auto;
-}
-
-/* .winsContainer{
-    background-color: rgb(224, 63, 63);
-    color: white;
-    
-} */
-#winAlert {
-    position: relative;
-}
-
-#lossAlert {
-    position: relative;
 }
 
 #start {
@@ -115,10 +102,43 @@ h2, h4, h6, h5, p, blockquote {
     text-shadow: 3px 3px black;
 }
 
+#start p {
+    text-shadow: none;
+    color: #444;
+}
+
+
+#start p:hover {
+    text-shadow: 1px 1px white;
+}
+
 .timerContainer {
     position: relative;
     top: 220px;
     font-size: 10px;
     color: white;
     text-shadow: 1px 1px black;
+}
+
+#winAlert {
+    font-size: 12px;
+    color: green;
+}
+
+#timeUpAlert {
+    font-size: 12px;
+    color: #444
+}
+
+#lossAlert {
+    font-size: 12px;
+    color: red;
+}
+
+#wins {
+    font-size: 8px;
+}
+
+#losses {
+    font-size: 8px;
 }
