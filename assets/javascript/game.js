@@ -137,7 +137,7 @@ function triviaGame() {
         ],
         correct: 2,
         correctAnswer: "Fountains of Wayne"
-        
+
     }];
 
     trivia.questionAsked = function () {
@@ -162,18 +162,19 @@ function triviaGame() {
             $(".answersContainer").hide()
             $("#finish")
                 .html(
-                    "<h5>" + "Game over." + "<br>" + 
+                    "<h5>" + "Game over." + "<br>" +
                     "Play again?" + "</h5>" +
                     "<br>" + "<p>" +
                     "Correct Answers: " + "<br>" +
                     trivia.answers.correct +
-                    "<br>" + 
+                    "<br>" +
                     " Incorrect Answers: " + "<br>" +
                     trivia.answers.incorrect +
-                    "</p>") 
+                    "</p>")
                 .appendTo(".questionContainer")
                 .show();
-            $("#finish").on("click", function() {
+
+            $("#finish").on("click", function () {
                 $(this).hide();
                 $(".timerContainer").show();
                 $(".questionContainer").show();
@@ -186,15 +187,16 @@ function triviaGame() {
 
     trivia.stopwatch = function () {
         trivia.count--;
-        if (trivia.count < 10) {
-            $("#timer").html("Time left: " + "00:0" + trivia.count);
-        }
+
         if (trivia.count <= 0) {
             $(".alertContainer").show();
-            $("#timeUpAlert").text("Time's Up! Next Question...");
+            $("#timeUpAlert").text("Time's Up! The answer was..." + " " + trivia.questions[currentQuestion].correctAnswer);
             $("#wins").html("Correct Answers: " + trivia.answers.correct);
-            $("#losses").html("Incorrect Answers: " + (trivia.answers.incorrect + 1));
-            setInterval(function () {
+            $("#losses").html("Incorrect Answers: " + (trivia.answers.incorrect));
+            setTimeout(function () {
+                $("#lossAlert").empty();
+                $("#winAlert").empty();
+                $("#timeUpAlert").empty();
                 $(".alertContainer").hide();
             }, 3000)
             setTimeout(function () {
@@ -244,7 +246,7 @@ $("#start").on("click", function () {
     $(".timerContainer").show();
     $(".questionContainer").show();
     $(".answersContainer").show();
-    
+
     game = triviaGame();
     game.questionAsked();
     // $("#gameStartAudio").play();
@@ -267,6 +269,7 @@ $(".answersContainer").on("click", "button", function () {
         trivia.answer(false);
         setTimeout(function () {
             $("#lossAlert").empty();
+            $("#timeUpAlert").empty();
             $(".alertContainer").hide();
         }, 3000)
 
@@ -279,6 +282,7 @@ $(".answersContainer").on("click", "button", function () {
         trivia.answer(true);
         setTimeout(function () {
             $("#winAlert").empty();
+            $("#timeUpAlert").empty();
             $(".alertContainer").hide();
         }, 3000)
     }
