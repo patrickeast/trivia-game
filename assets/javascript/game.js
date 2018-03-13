@@ -1,3 +1,25 @@
+$(document).ready(function () {
+
+
+
+    // $('#start').click(function() {
+    //     audioElement.pause();
+    // });
+
+    // $('#start').click(function() {
+    //     audioElement.currentTime = 0;
+    // });
+});
+
+
+
+
+
+
+
+
+
+
 window.onload = function () {
     $(".timerContainer").hide();
     $(".questionContainer").hide();
@@ -199,7 +221,7 @@ function triviaGame() {
                 $("#winAlert").empty();
                 $("#timeUpAlert").empty();
                 $(".alertContainer").hide();
-            }, 1000)
+            }, 3000)
             setTimeout(function () {
                 trivia.nextQuestion();
             });
@@ -219,7 +241,7 @@ function triviaGame() {
         setTimeout(function () {
             trivia.reset();
             trivia.questionAsked();
-        }, 3000)
+        }, 1000)
     };
 
     trivia.reset = function () {
@@ -243,6 +265,7 @@ function triviaGame() {
 var game;
 
 $("#start").on("click", function () {
+    
     $(this).hide();
     $(".timerContainer").show();
     $(".questionContainer").show();
@@ -250,8 +273,6 @@ $("#start").on("click", function () {
 
     game = triviaGame();
     game.questionAsked();
-    // $("#gameStartAudio").play();
-    console.log(game.questionAsked);
 });
 
 $(".answersContainer").on("click", "button", function () {
