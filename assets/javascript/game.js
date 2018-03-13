@@ -3,6 +3,7 @@ window.onload = function () {
     $(".questionContainer").hide();
     $(".answersContainer").hide();
     $(".alertContainer").hide();
+    $("#finish").hide();
 };
 
 function triviaGame() {
@@ -108,7 +109,7 @@ function triviaGame() {
         question: "Hate is a strong word, but I really, really, really don't like you.",
         choices: [
             "Relient K",
-            "All American Rejects",
+            "Plain White T's",
             "Bayside",
             "New Found Glory"
         ],
@@ -129,7 +130,7 @@ function triviaGame() {
 
         question: "Do you remember when I mowed your lawn? Your mom came out, with just a towel o-o-o-o-on.",
         choices: [
-            "Yewllowcard",
+            "Yellowcard",
             "Simple Plan",
             "Fountains of Wayne",
             "Blondie"
@@ -158,18 +159,28 @@ function triviaGame() {
             window.timerContainer = setInterval(trivia.stopwatch, 1000);
 
         } else {
-            $("#start")
+            $(".answersContainer").hide()
+            $("#finish")
                 .html(
-                    "<p>" +"Play Again?" +
-                    "<br>" + 
-                    "Correct Answers: " +
+                    "<h5>" + "Game over." + "<br>" + 
+                    "Play again?" + "</h5>" +
+                    "<br>" + "<p>" +
+                    "Correct Answers: " + "<br>" +
                     trivia.answers.correct +
                     "<br>" + 
-                    " Incorrect Answers: " +
+                    " Incorrect Answers: " + "<br>" +
                     trivia.answers.incorrect +
-                    "</p>")
+                    "</p>") 
                 .appendTo(".questionContainer")
                 .show();
+            $("#finish").on("click", function() {
+                $(this).hide();
+                $(".timerContainer").show();
+                $(".questionContainer").show();
+                $(".answersContainer").show();
+                game = triviaGame();
+                game.questionAsked();
+            })
         }
     };
 
@@ -233,9 +244,10 @@ $("#start").on("click", function () {
     $(".timerContainer").show();
     $(".questionContainer").show();
     $(".answersContainer").show();
-
+    
     game = triviaGame();
     game.questionAsked();
+    // $("#gameStartAudio").play();
     console.log(game.questionAsked);
 });
 
@@ -254,6 +266,7 @@ $(".answersContainer").on("click", "button", function () {
         $("#losses").text("Incorrect Answers: " + trivia.answers.incorrect);
         trivia.answer(false);
         setTimeout(function () {
+            $("#lossAlert").empty();
             $(".alertContainer").hide();
         }, 3000)
 
@@ -265,6 +278,7 @@ $(".answersContainer").on("click", "button", function () {
         $("#losses").text("Incorrect Answers: " + trivia.answers.incorrect);
         trivia.answer(true);
         setTimeout(function () {
+            $("#winAlert").empty();
             $(".alertContainer").hide();
         }, 3000)
     }
