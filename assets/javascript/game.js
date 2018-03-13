@@ -87,8 +87,8 @@ function triviaGame() {
         question: "Don't forget to think about me and I won't forget to write you once a week, she said.",
         choices: [
             "Blink-182",
-            "Austin City Limits",
-            "^^That's not a band",
+            "The Academy Is...",
+            "Real Friends",
             "Hoobastank"
         ],
         correct: 0,
@@ -159,20 +159,22 @@ function triviaGame() {
             window.timerContainer = setInterval(trivia.stopwatch, 1000);
 
         } else {
-            $(".answersContainer").hide()
-            $("#finish")
-                .html(
-                    "<h5>" + "Game over." + "<br>" +
-                    "Play again?" + "</h5>" +
-                    "<br>" + "<p>" +
-                    "Correct Answers: " + "<br>" +
-                    trivia.answers.correct +
-                    "<br>" +
-                    " Incorrect Answers: " + "<br>" +
-                    trivia.answers.incorrect +
-                    "</p>")
-                .appendTo(".questionContainer")
-                .show();
+            setTimeout(function () {
+                $(".alertContainer").hide()
+                $("#finish")
+                    .html(
+                        "<h5>" + "Game over." + "<br>" +
+                        "Play again?" + "</h5>" +
+                        "<br>" + "<p>" +
+                        "Correct Answers: " + "<br>" +
+                        trivia.answers.correct +
+                        "<br>" +
+                        " Incorrect Answers: " + "<br>" +
+                        trivia.answers.incorrect +
+                        "</p>")
+                    .appendTo(".questionContainer")
+                    .show();
+            }, 2000)
 
             $("#finish").on("click", function () {
                 $(this).hide();
