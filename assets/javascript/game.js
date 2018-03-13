@@ -192,6 +192,7 @@ function triviaGame() {
             $(".alertContainer").show();
             $("#timeUpAlert").text("Time's Up! The answer was..." + " " + trivia.questions[currentQuestion].correctAnswer);
             $("#wins").html("Correct Answers: " + trivia.answers.correct);
+            trivia.answers.incorrect = (trivia.answers.incorrect + 1);
             $("#losses").html("Incorrect Answers: " + (trivia.answers.incorrect));
             setTimeout(function () {
                 $("#lossAlert").empty();
