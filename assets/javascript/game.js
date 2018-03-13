@@ -159,22 +159,20 @@ function triviaGame() {
             window.timerContainer = setInterval(trivia.stopwatch, 1000);
 
         } else {
-            setTimeout(function () {
-                $(".alertContainer").hide()
-                $("#finish")
-                    .html(
-                        "<h5>" + "Game over." + "<br>" +
-                        "Play again?" + "</h5>" +
-                        "<br>" + "<p>" +
-                        "Correct Answers: " + "<br>" +
-                        trivia.answers.correct +
-                        "<br>" +
-                        " Incorrect Answers: " + "<br>" +
-                        trivia.answers.incorrect +
-                        "</p>")
-                    .appendTo(".questionContainer")
-                    .show();
-            }, 2000)
+            $(".alertContainer").hide()
+            $("#finish")
+                .html(
+                    "<h5>" + "Game over." + "<br>" +
+                    "Play again?" + "</h5>" +
+                    "<br>" + "<p>" +
+                    "Correct Answers: " + "<br>" +
+                    trivia.answers.correct +
+                    "<br>" +
+                    " Incorrect Answers: " + "<br>" +
+                    trivia.answers.incorrect +
+                    "</p>")
+                .appendTo(".questionContainer")
+                .show();
 
             $("#finish").on("click", function () {
                 $(this).hide();
@@ -201,7 +199,7 @@ function triviaGame() {
                 $("#winAlert").empty();
                 $("#timeUpAlert").empty();
                 $(".alertContainer").hide();
-            }, 3000)
+            }, 1000)
             setTimeout(function () {
                 trivia.nextQuestion();
             });
@@ -221,7 +219,7 @@ function triviaGame() {
         setTimeout(function () {
             trivia.reset();
             trivia.questionAsked();
-        }, 1000)
+        }, 3000)
     };
 
     trivia.reset = function () {
